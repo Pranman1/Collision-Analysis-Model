@@ -45,6 +45,9 @@ goal_state = InitialState(
 
 goal_region = GoalRegion([goal_state])
 
+def dist(x,y):
+    return math.sqrt(x**2 + y**2)
+
 def reigon(x,y):
     if max(-x-y,x-y)<=0:
         return "N"
@@ -150,39 +153,42 @@ def create_planning_problems(reigions):
             print(a)
             x = a[0]
             y = a[1]
-            lan = find_lanelet_given_point(scenario,(x,y))
-            ra = lan.center_vertices
-            pt1 = ra[0]
-            b = len(ra)//2
-            pt2 = ra[b]
-            ori2 = lan.orientation_by_position(pt2)
-        
-            if reigon(x,y) == reigions[i] and dirori(lan,pt2) == reigions[i] :
 
+            if dist(x,y)>20:
+
+                lan = find_lanelet_given_point(scenario,(x,y))
                 ra = lan.center_vertices
                 pt1 = ra[0]
                 b = len(ra)//2
                 pt2 = ra[b]
                 ori2 = lan.orientation_by_position(pt2)
+            
+                if reigon(x,y) == reigions[i] and dirori(lan,pt2) == reigions[i] :
 
-                ori = math.atan((pt1[0]-pt2[0])/(pt1[1]-pt2[1]))
-                print(ori2, f"orinetatiomn for {J}, and {i}")
+                    ra = lan.center_vertices
+                    pt1 = ra[0]
+                    b = len(ra)//2
+                    pt2 = ra[b]
+                    ori2 = lan.orientation_by_position(pt2)
 
-                start_state = InitialState(
-                    time_step=0,
-                    position=np.array([x, y]),
-                    velocity=10.0,
-                    orientation= ori2,
+                    ori = math.atan((pt1[0]-pt2[0])/(pt1[1]-pt2[1]))
+                    print(ori2, f"orinetatiomn for {J}, and {i}")
 
-                    # orientation = AngleInterval(-(3.141),(3.141)),  # Heading angle in radians
-                    yaw_rate=0.0,  # Rotational velocity
-                    slip_angle=0.0  # Slip angl
-                    )
-                planning_problem = PlanningProblem(J, initial_state=start_state, goal_region=goal_region)
+                    start_state = InitialState(
+                        time_step=0,
+                        position=np.array([x, y]),
+                        velocity=10.0,
+                        orientation= ori2,
 
-                # pp.add_planning_problem(planning_problem)
-                temp.append(planning_problem)
-                J+=1
+                        # orientation = AngleInterval(-(3.141),(3.141)),  # Heading angle in radians
+                        yaw_rate=0.0,  # Rotational velocity
+                        slip_angle=0.0  # Slip angl
+                        )
+                    planning_problem = PlanningProblem(J, initial_state=start_state, goal_region=goal_region)
+
+                    # pp.add_planning_problem(planning_problem)
+                    temp.append(planning_problem)
+                    J+=1
         all_pp.append(temp)
     
     print(all_pp) 
