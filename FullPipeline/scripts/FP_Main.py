@@ -2,13 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from commonroad.common.file_reader import CommonRoadFileReader
-from commonroad_route_planner.route_planner import RoutePlanner
 from commonroad.scenario.state import KSState
 from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.visualization.mp_renderer import MPRenderer
-from commonroad_rp.reactive_planner import ReactivePlanner
-from commonroad_rp.utility.config import ReactivePlannerConfiguration
 from commonroad.geometry.shape import Rectangle
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.planning.planning_problem import PlanningProblem, PlanningProblemSet
@@ -16,8 +13,7 @@ from commonroad.planning.goal import GoalRegion
 from commonroad.scenario.state import InitialState
 from commonroad.geometry.shape import Circle
 from commonroad.common.util import Interval, AngleInterval
-from commonroad_rp.utility.utils_coordinate_system import CurvilinearCoordinateSystem
-import requests
+
 from FP_OSM import extractosm
 from FP_OSM import convert_osm_to_commonroad
 from FP_PP import create_planning_problems
@@ -29,9 +25,9 @@ radius = input("Enter Radius (in meters): ").strip()
 num_party = input("Enter Number of Parties: ").strip()
 num_party = int(num_party)
 reigon = []
-# extractosm(37.868488311767578, -122.267868, 50) ("N","W")
+extractosm(37.868488311767578, -122.267868, 50) #("N","W")
 # extractosm(37.869678497314453 , -122.265793 , 50) ("S","W")
-extractosm(37.8532791137695 , -122.2790 , 50) 
+# extractosm(37.8532791137695 , -122.2790 , 50) 
 
 # extractosm(lat, lon, 50)
 convert_osm_to_commonroad()

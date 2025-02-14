@@ -17,7 +17,7 @@ traffic_light_params = TrafficLightParams(scale_factor=5.0)  # Increase to desir
 
 
 # Load the scenario using CommonRoadFileReader
-scenario_file = "Commonroad/USA_a1-1_1_T-1.xml"
+scenario_file = "Collision-Analysis-Model/output/USA_a1-1_1_T-1.xml"
 scenario, planning_problem_set = CommonRoadFileReader(scenario_file).open()
 def dist(point1, point2):
     return np.sqrt((point1['x'] - point2['x'])**2 + (point1['y'] - point2['y'])**2)

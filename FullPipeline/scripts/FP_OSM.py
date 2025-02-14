@@ -1,22 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from commonroad.common.file_reader import CommonRoadFileReader
-from commonroad_route_planner.route_planner import RoutePlanner
-from commonroad.scenario.state import KSState
-from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
-from commonroad.scenario.trajectory import Trajectory
-from commonroad.visualization.mp_renderer import MPRenderer
-from commonroad_rp.reactive_planner import ReactivePlanner
-from commonroad_rp.utility.config import ReactivePlannerConfiguration
-from commonroad.geometry.shape import Rectangle
+
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.planning.planning_problem import PlanningProblem, PlanningProblemSet
-from commonroad.planning.goal import GoalRegion
-from commonroad.scenario.state import InitialState
-from commonroad.geometry.shape import Circle
-from commonroad.common.util import Interval, AngleInterval
-from commonroad_rp.utility.utils_coordinate_system import CurvilinearCoordinateSystem
+
 import requests
 import os
 from crdesigner.map_conversion.map_conversion_interface import osm_to_commonroad
@@ -69,7 +54,7 @@ def extractosm(lat,lon,radius):
     # Check if the request was successful
     if response.status_code == 200:
         # Save the resulting data to an OSM file
-        filename = "Commonroad/FullPipeline/fullpipeline.osm"
+        filename = "Collision-Analysis-Model/FullPipeline/fullpipeline.osm"
         with open(filename, "w", encoding="utf-8") as f:
             if f == None:
                 return None
@@ -82,11 +67,11 @@ def extractosm(lat,lon,radius):
 def convert_osm_to_commonroad():
  
     # Convert OSM to CommonRoad scenario
-    file = "Commonroad/FullPipeline/fullpipeline.osm"
+    file = "Collision-Analysis-Model/FullPipeline/fullpipeline.osm"
     scenario = osm_to_commonroad(file)
 
     # Define output file path
-    output_file = "Commonroad/FullPipeline/FP1.xml"
+    output_file = "Collision-Analysis-Model/FullPipeline/scenarios/FP1.xml"
 
     # Save scenario to XML
     writer = CommonRoadFileWriter(

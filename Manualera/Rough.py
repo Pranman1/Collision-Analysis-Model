@@ -25,7 +25,7 @@ from commonroad.prediction.prediction import TrajectoryPrediction
 
 
 
-filename = "Commonroad/FullPipeline/KittShat0.xml"
+filename = "Collision-Analysis-Model/FullPipeline/output/OUT0.xml"
 scenario_path =  filename 
 scenario, planning_problem_set= CommonRoadFileReader(scenario_path).open()
 print(planning_problem_set)
@@ -47,13 +47,13 @@ for i in range(len(plan)):
 
     config.update(scenario=scenario, planning_problem=plan[i])
 
-    route_planner = RoutePlanner(config.scenario, config.planning_problem)
+    route_planner = RoutePlanner(config.scenario.lanelet_network, config.planning_problem)
 
     router = route_planner.plan_routes()
     
-    route = router.retrieve_first_route()
+    route = router[0]
     
-    print(route.list_ids_lanelets)
+    print(route.lanelet_ids)
 
     planner = ReactivePlanner(config)
 

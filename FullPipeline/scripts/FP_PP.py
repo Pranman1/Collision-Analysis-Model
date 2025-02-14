@@ -4,7 +4,6 @@ from commonroad.planning.goal import GoalRegion
 from commonroad.scenario.state import InitialState
 from commonroad.geometry.shape import Circle, Rectangle
 from commonroad.common.util import Interval, AngleInterval
-from commonroad_route_planner.route_planner import RoutePlanner
 from commonroad.visualization.mp_renderer import MPRenderer
 from commonroad.scenario.lanelet import Lanelet
 import numpy as np
@@ -16,6 +15,13 @@ from commonroad.common.file_writer import CommonRoadFileWriter,OverwriteExisting
 import math
 from shapely.geometry import Point
 from itertools import product
+
+def find_orientation(lanelet,pt):
+    return
+
+def ret_rectangle(center,ori):
+    return Rectangle(width = 2, length = 4, center=np.array(center), orientation= ori)
+
 
 def find_lanelet_given_point(scenario, point):
     """
@@ -72,13 +78,11 @@ def dirori(lanelet, pt):
 
 
 def center_scenario():
-    scenario_file =  "Commonroad/FullPipeline/FP1.xml"
+    scenario_file =  "Collision-Analysis-Model/FullPipeline/scenarios/FP1.xml"
     scenario,_= CommonRoadFileReader(scenario_file).open()
     center_points = []
-    num = {}
+
     for lanelet in scenario.lanelet_network.lanelets:
-        a = len(lanelet.center_vertices)//2
-        num[f"{lanelet.lanelet_id}"] = lanelet.center_vertices[a]
         center_points.extend(lanelet.center_vertices)
        
     center_points = np.array(center_points)
@@ -99,18 +103,13 @@ def center_scenario():
     densest_point = center_points[densest_point_index]
 
     scenario.translate_rotate(-densest_point,0)
-    scenario_file =  "Commonroad/FullPipeline/FPShift.xml"
+    scenario_file =  "Collision-Analysis-Model/FullPipeline/scenarios/FPShift.xml"
     planning_problem_set = _
 
     CommonRoadFileWriter(scenario,planning_problem_set).write_scenario_to_file(scenario_file, OverwriteExistingFile.ALWAYS)
 
 
-lan= Lanelet(
-    left_vertices=np.array([[0, -2.5], [-50, -2.5]]),
-    right_vertices=np.array([[0, 0], [-50, 0]]),
-    center_vertices=np.array([[0, -1.25], [-50, -1.25]]),
-    lanelet_id=1010
-)
+
 
 
 def generate_planning_problem_permutations(planning_problem_lists):
@@ -131,16 +130,14 @@ def generate_planning_problem_permutations(planning_problem_lists):
     return [list(permutation) for permutation in permutations]
 
 def create_planning_problems(reigions):
-    scenario_file =  "Commonroad/FullPipeline/FPShift.xml"
+    scenario_file =  "Collision-Analysis-Model/FullPipeline/scenarios/FPShift.xml"
     scenario,pp= CommonRoadFileReader(scenario_file).open()
     if pp == None:
         pp = PlanningProblemSet()
 
     center_points = []
-    num = {}
     for lanelet in scenario.lanelet_network.lanelets:
         a = len(lanelet.center_vertices)//2
-        num[f"{lanelet.lanelet_id}"] = lanelet.center_vertices[a]
         center_points.append(lanelet.center_vertices[a])
 
 
@@ -149,19 +146,17 @@ def create_planning_problems(reigions):
     for i in range(len(reigions)):
         temp =[]
         for a in center_points:
-        
-            print(a)
             x = a[0]
             y = a[1]
 
             if dist(x,y)>20:
 
                 lan = find_lanelet_given_point(scenario,(x,y))
+                
                 ra = lan.center_vertices
                 pt1 = ra[0]
                 b = len(ra)//2
                 pt2 = ra[b]
-                ori2 = lan.orientation_by_position(pt2)
             
                 if reigon(x,y) == reigions[i] and dirori(lan,pt2) == reigions[i] :
 
@@ -169,17 +164,18 @@ def create_planning_problems(reigions):
                     pt1 = ra[0]
                     b = len(ra)//2
                     pt2 = ra[b]
-                    ori2 = lan.orientation_by_position(pt2)
+                    # ori2 = lan.orientation_by_position(pt2)
 
-                    ori = math.atan((pt1[0]-pt2[0])/(pt1[1]-pt2[1]))
+                    ori2 = math.atan((pt1[0]-pt2[0])/(pt1[1]-pt2[1]))
+                    startshape = ret_rectangle([x,y],ori2)
                     print(ori2, f"orinetatiomn for {J}, and {i}")
 
                     start_state = InitialState(
                         time_step=0,
-                        position=np.array([x, y]),
-                        velocity=10.0,
-                        orientation= ori2,
-
+                        position= startshape,
+                        velocity=Interval(10.0,30),
+                        orientation = Interval(ori2-0.01, ori2 + 0.01),
+ 
                         # orientation = AngleInterval(-(3.141),(3.141)),  # Heading angle in radians
                         yaw_rate=0.0,  # Rotational velocity
                         slip_angle=0.0  # Slip angl
@@ -199,7 +195,7 @@ def create_planning_problems(reigions):
 
     i = 0
     for lst in perm:
-        scenario_file =  f"Commonroad/FullPipeline/KittShat{i}.xml"
+        scenario_file =  f"Collision-Analysis-Model/FullPipeline/output/OUT{i}.xml"
         pp = PlanningProblemSet()
         for j in lst: 
             pp.add_planning_problem(j)
@@ -209,6 +205,4 @@ def create_planning_problems(reigions):
         CommonRoadFileWriter(scenario,pp).write_to_file(scenario_file, OverwriteExistingFile.ALWAYS)
 
 
-
-
-create_planning_problems(["W"])
+create_planning_problems(["N"])

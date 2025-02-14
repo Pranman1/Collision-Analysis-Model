@@ -37,13 +37,13 @@ def find_traj(scenario,planprob):
 
     config.update(scenario=scenario, planning_problem=planprob)
 
-    route_planner = RoutePlanner(config.scenario, config.planning_problem)
+    route_planner = RoutePlanner(config.scenario.lanelet_network, config.planning_problem)
 
     router = route_planner.plan_routes()
     
     
-    route = router.retrieve_first_route()
-    route = route.list_ids_lanelets
+    route = router[0]
+    route = route.lanelet_ids
     print(route)
 
     center_points = []
