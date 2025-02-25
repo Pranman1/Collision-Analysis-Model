@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<commonRoad timeStepSize="0.1" commonRoadVersion="2020a" author="Your Name" affiliation="Your Affiliation" source="Generated from OSM data" benchmarkID="ZAM_Test-1_1_T-1" date="2025-02-10">
+<commonRoad timeStepSize="0.1" commonRoadVersion="2020a" author="Your Name" affiliation="Your Affiliation" source="Generated from OSM data" benchmarkID="ZAM_Test-1_1_T-1" date="2025-02-24">
   <location>
     <geoNameId>-999</geoNameId>
     <gpsLatitude>999.0</gpsLatitude>
@@ -5422,17 +5422,22 @@
       <isLeftOf ref="69"/>
     </incoming>
   </intersection>
-  <planningProblem id="6">
+  <planningProblem id="2">
     <initialState>
       <time>
         <exact>0</exact>
       </time>
+      <position>
+        <point>
+          <x>-2.6582</x>
+          <y>14.643</y>
+        </point>
+      </position>
       <orientation>
-        <exact>-0.3553</exact>
+        <exact>-1.5697</exact>
       </orientation>
       <velocity>
-        <intervalStart>10.0</intervalStart>
-        <intervalEnd>20.0</intervalEnd>
+        <exact>10.0</exact>
       </velocity>
       <yawRate>
         <exact>0.0</exact>
@@ -5461,17 +5466,66 @@
       </velocity>
     </goalState>
   </planningProblem>
-  <planningProblem id="11">
+  <planningProblem id="8">
     <initialState>
       <time>
         <exact>0</exact>
       </time>
+      <position>
+        <point>
+          <x>-26.4006</x>
+          <y>-5.4946</y>
+        </point>
+      </position>
       <orientation>
-        <exact>1.3497</exact>
+        <exact>0.1892</exact>
       </orientation>
       <velocity>
-        <intervalStart>10.0</intervalStart>
-        <intervalEnd>20.0</intervalEnd>
+        <exact>10.0</exact>
+      </velocity>
+      <yawRate>
+        <exact>0.0</exact>
+      </yawRate>
+      <slipAngle>
+        <exact>0.0</exact>
+      </slipAngle>
+    </initialState>
+    <goalState>
+      <time>
+        <intervalStart>50</intervalStart>
+        <intervalEnd>50</intervalEnd>
+      </time>
+      <position>
+        <circle>
+          <radius>30.0</radius>
+          <center>
+            <x>0.0</x>
+            <y>0.0</y>
+          </center>
+        </circle>
+      </position>
+      <velocity>
+        <intervalStart>1.0</intervalStart>
+        <intervalEnd>55.0</intervalEnd>
+      </velocity>
+    </goalState>
+  </planningProblem>
+  <planningProblem id="13">
+    <initialState>
+      <time>
+        <exact>0</exact>
+      </time>
+      <position>
+        <point>
+          <x>10.6865</x>
+          <y>-33.3011</y>
+        </point>
+      </position>
+      <orientation>
+        <exact>1.6478</exact>
+      </orientation>
+      <velocity>
+        <exact>10.0</exact>
       </velocity>
       <yawRate>
         <exact>0.0</exact>

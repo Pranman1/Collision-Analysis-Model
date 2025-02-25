@@ -1,3 +1,5 @@
+from commonroad_rp.reactive_planner import ReactivePlanner
+from commonroad_rp.utility.config import ReactivePlannerConfiguration
 from commonroad_route_planner.route_planner import RoutePlanner
 from commonroad.common.file_reader import CommonRoadFileReader
 import numpy as np
@@ -10,6 +12,8 @@ from commonroad.scenario.state import KSState
 from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.visualization.mp_renderer import MPRenderer
+from commonroad_rp.reactive_planner import ReactivePlanner
+from commonroad_rp.utility.config import ReactivePlannerConfiguration
 from commonroad.geometry.shape import Rectangle
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.planning.planning_problem import PlanningProblem, PlanningProblemSet

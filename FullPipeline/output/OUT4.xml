@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<commonRoad timeStepSize="0.1" commonRoadVersion="2020a" author="Your Name" affiliation="Your Affiliation" source="Generated from OSM data" benchmarkID="ZAM_Test-1_1_T-1" date="2025-02-13">
+<commonRoad timeStepSize="0.1" commonRoadVersion="2020a" author="Your Name" affiliation="Your Affiliation" source="Generated from OSM data" benchmarkID="ZAM_Test-1_1_T-1" date="2025-02-24">
   <location>
     <geoNameId>-999</geoNameId>
     <gpsLatitude>999.0</gpsLatitude>
@@ -5428,23 +5428,16 @@
         <exact>0</exact>
       </time>
       <position>
-        <rectangle>
-          <length>4</length>
-          <width>2</width>
-          <orientation>-0.07674405198081026</orientation>
-          <center>
-            <x>-9.8347</x>
-            <y>22.4350</y>
-          </center>
-        </rectangle>
+        <point>
+          <x>10.6865</x>
+          <y>-33.3011</y>
+        </point>
       </position>
       <orientation>
-        <intervalStart>-0.0867</intervalStart>
-        <intervalEnd>-0.0667</intervalEnd>
+        <exact>1.6478</exact>
       </orientation>
       <velocity>
-        <intervalStart>10.0</intervalStart>
-        <intervalEnd>30.0</intervalEnd>
+        <exact>10.0</exact>
       </velocity>
       <yawRate>
         <exact>0.0</exact>
